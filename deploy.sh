@@ -13,6 +13,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:https://olbesp.github.io/video-browser.git master:gh-pages
+git push -f git@github.com:olbesp/video-browser.git master:gh-pages
 
 cd -
