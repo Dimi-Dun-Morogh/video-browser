@@ -68,7 +68,6 @@ export default {
       }
     },
     async onTermChange(searchTerm, page) {
-      this.pageCounter = page ? (this.pageCounter = this.pageCounter + 1) : 0
       try {
         const fetchedVids = await this.fetchVids(searchTerm, page)
         const {
@@ -91,11 +90,14 @@ export default {
     },
     nextPage() {
       console.log('next page go', this.nextPageToken)
+      this.pageCounter = this.pageCounter + 1;
       this.prevPageToken = this.currentPageToken
       this.onTermChange(this.query, this.nextPageToken)
     },
     prevPage() {
-      console.log('prev page go', this.prevPageToken)
+      console.log('prev page go', this.prevPageToken);
+      this.pageCounter = this.pageCounter -1;
+      if (this.pageCounter === 0) return this.onTermChange(this.query); //because apparently there is no special url for page 0;
       this.onTermChange(this.query, this.prevPageToken)
     },
   },
