@@ -6,6 +6,12 @@
       :key="video.etag"
       @videoSelect="onVideoSelect"
     ></VideoListItem>
+    <span>results : {{totalResults}}</span>
+    <div class="buttons-wrap">
+      <button @click="prevClick" :disabled="!disabled">Prev</button>
+      <button @click="nextClick">Next
+      </button>
+    </div>
   </ul>
 </template>
 
@@ -19,14 +25,31 @@ export default {
   },
   props: {
     videos: Array,
+    totalResults:  Number,
+    disabled: Boolean,
   },
   methods: {
     onVideoSelect(video) {
       this.$emit('videoSelect', video)
     },
+    nextClick(){
+      this.$emit('onNext')
+    },
+    prevClick(){
+      this.$emit('onPrev')
+    }
   },
 }
 </script>
 
-<style>
+<style css scoped>
+span {
+  text-align: center;
+}
+button {
+  cursor: pointer;
+}
+button +  button {
+  margin-left: 5px;
+}
 </style>
