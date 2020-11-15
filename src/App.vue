@@ -2,7 +2,7 @@
   <div class="container">
     <SearchBar @termChange="onTermChange"></SearchBar>
     <div class="row">
-      <VideoDetail :video="selectedVideo"/>
+      <VideoDetail :video="selectedVideo" />
       <VideoList :videos="videos" @videoSelect="onVideoSelect"></VideoList>
     </div>
   </div>
@@ -29,8 +29,9 @@ export default {
     }
   },
   methods: {
-    onTermChange(searchTerm) {
-      axios
+   async onTermChange(searchTerm) {
+    try {
+     const fetchedVids = await axios
         .get('https://www.googleapis.com/youtube/v3/search', {
           params: {
             key: YOUTUBE_API_KEY,
@@ -38,10 +39,12 @@ export default {
             part: 'snippet',
             q: searchTerm,
           },
-        })
-        .then(response => {
-          this.videos = response.data.items
-        })
+        });
+    this.videos = fetchedVids.data.items;
+    if(this.videos.length !== 0) this.selectedVideo = this.videos[0];
+    } catch (error) {
+      return Promise.reject(error);
+    }
     },
     onVideoSelect(video) {
       this.selectedVideo = video

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input @input="onInput" type="text">
+    <input v-debounce:500ms="onInput" type="text">
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   name: 'SearchBar',
   methods: {
-    onInput(e) {
+    onInput(a,e) {
       this.$emit('termChange', e.target.value)
     },
   },
